@@ -22,6 +22,20 @@ namespace ReplayHandler
             return res;
         }
 
+        public byte[] ReadBytesAligned(int n)
+        {
+            Align();
+            var res = new byte[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                res[i] = (SafeGetByte(Pos));
+                Pos += 1;
+            }
+
+            return res;
+        }
+
         public void Align()
         {
             if (BitPos > 0)
@@ -31,7 +45,7 @@ namespace ReplayHandler
             }
         }
 
-        public int SafeGetByte(int pos)
+        public byte SafeGetByte(int pos)
         {
             if (Pos < Buf.Length)
             {
@@ -53,7 +67,7 @@ namespace ReplayHandler
             {
                 var bitsPossibleToWrite = 8 - BitPos;
                 var bits = Math.Min(bitsRemaining, bitsPossibleToWrite);
-                var mask = bits == 8 ? 0xFF : ~(0xFF << bits);
+                var mask = bits == 8 ? Int32.MaxValue : ~(Int32.MaxValue << bits);
                 var a = (SafeGetByte(Pos) >> BitPos) & mask;
 
                 res = (int)(res | (a << p));
@@ -87,11 +101,26 @@ namespace ReplayHandler
             return b1 | b2 << 8 | b3 << 16 | b4 << 24;
         }
 
+        public int ReadU16Aligned()
+        {
+            Align();
+            var b1 = SafeGetByte(Pos);
+            var b2 = SafeGetByte(Pos + 1);
+            Pos += 2;
+            return b1 | b2 << 8;
+        }
+
+        public float ReadF32Aligned()
+        {
+            var i = ReadU32Aligned();
+            return Convert.ToSingle(i);
+        }
+
         public int ReadBitsSigned(int b)
         {
             var a = ReadBits(b);
 
-            if (a>=1 << (b - 1))
+            if (a >= 1 << (b - 1))
             {
                 return (-1 << b) | (a);
             }

@@ -25,6 +25,7 @@ namespace ReplayHandler.Classes
         public List<ReplayPuck> Pucks { get; set; }
         public List<ReplayPlayer> Players { get; set; }
         public List<ReplayMessage> Messages { get; set; }
+        public List<PlayerInList> PlayersInList { get; set; }
 
         public ReplayTick()
         {
@@ -34,35 +35,74 @@ namespace ReplayHandler.Classes
         }
     }
 
+    public class PlayerInList
+    {
+        public int Index { get; set; }
+        public string Name { get; set; }
+        public ReplayTeam Team { get; set; }
+    }
+
     public class ReplayPuck
     {
-        public decimal PosX { get; set; }
-        public decimal PosY { get; set; }
-        public decimal PosZ { get; set; }
-        public decimal RotX { get; set; }
-        public decimal RotY { get; set; }
+        public int Index { get; set; }
+        public double PosX { get; set; }
+        public double PosY { get; set; }
+        public double PosZ { get; set; }
+        public double RotX { get; set; }
+        public double RotY { get; set; }
+        public double RotZ { get; set; }
+
+        public ReplayPuck()
+        {
+            PosX = 0;
+            PosY = 0;
+            PosZ = 0;
+            RotX = 0;
+            RotY = 0;
+            RotZ = 0;
+        }
     }
 
     public class ReplayPlayer
     {
-        public int PlayerIndex { get; set; }
-        public decimal PosX { get; set; }
-        public decimal PosY { get; set; }
-        public decimal PosZ { get; set; }
-        public decimal RotX { get; set; }
-        public decimal RotY { get; set; }
-        public decimal StickPosX { get; set; }
-        public decimal StickPosY { get; set; }
-        public decimal StickPosZ { get; set; }
-        public decimal StickRotX { get; set; }
-        public decimal StickRotY { get; set; }
-        public decimal HeadTurn { get; set; }
-        public decimal BodyLean { get; set; }
+        public int Index { get; set; }
+        public double PosX { get; set; }
+        public double PosY { get; set; }
+        public double PosZ { get; set; }
+        public double RotX { get; set; }
+        public double RotY { get; set; }
+        public double RotZ { get; set; }
+        public double StickPosX { get; set; }
+        public double StickPosY { get; set; }
+        public double StickPosZ { get; set; }
+        public double StickRotX { get; set; }
+        public double StickRotY { get; set; }
+        public double StickRotZ { get; set; }
+        public double HeadTurn { get; set; }
+        public double BodyLean { get; set; }
+
+        public ReplayPlayer()
+        {
+            PosX = 0;
+            PosY = 0;
+            PosZ = 0;
+            RotX = 0;
+            RotY = 0;
+            StickPosX = 0;
+            StickPosY = 0;
+            StickPosZ = 0;
+            StickRotX = 0;
+            StickRotY = 0;
+            StickRotZ = 0;
+            HeadTurn = 0;
+            BodyLean = 0;
+        }
     }
 
     public class ReplayMessage
     {
         public ReplayMessageType ReplayMessageType { get; set; }
+        public int ObjectIndex { get; set; }
 
         //Chat
         public int PlayerIndex { get; set; }
